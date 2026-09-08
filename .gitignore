@@ -1,0 +1,6 @@
+*.vcd
+*.fst
+*.out
+*.log
+obj_dir/
+build/
