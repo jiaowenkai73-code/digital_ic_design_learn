@@ -4,3 +4,5 @@
 *.log
 obj_dir/
 build/
+*_sim
+*.vcd

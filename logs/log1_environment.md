@@ -1,4 +1,4 @@
-# Day 1 - RTL Development Environment Setup
+# log 1 - RTL Development Environment Setup
 
 Today I started learning digital IC front-end design.
 
