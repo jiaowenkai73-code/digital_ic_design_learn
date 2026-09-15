@@ -12,6 +12,7 @@ parameter YELLOW = 2'b10;
 
 reg [1:0] current_state;
 reg [1:0] next_state;
+reg [4:0] count;
  //状态什么时候切换
 always @(posedge clk) begin
     if (!rst_n)
@@ -22,7 +23,7 @@ end
  //output logic
 always @(*) begin
     // 默认值
-    next_state   = RED;
+    next_state   = current_state;
     red_light    = 1'b0;
     green_light  = 1'b0;
     yellow_light = 1'b0;
@@ -31,21 +32,22 @@ always @(*) begin
         RED: begin
             red_light  = 1'b1;
  
-            if (count == 5'b01001)
+            if (count == 5'd9)
                 next_state = GREEN;
         end
 
         GREEN: begin
             green_light = 1'b1;
 
-            if (count == 5'd10011)
+            if (count == 5'd19)
                 next_state  = YELLOW;
         end
 
         YELLOW: begin
             yellow_light = 1'b1;
 
-            if (count == 5'b00011)
+            if (count == 5'd2)
+                next_state = RED;
         end
 
         default: begin
