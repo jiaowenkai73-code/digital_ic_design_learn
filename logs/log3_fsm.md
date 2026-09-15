@@ -1,4 +1,6 @@
-# 2026-09-12 FSM and Counter Learning Log
+# Log 3 - Traffic Light FSM and Counter
+
+## What I Learned
 
 Today I mainly focused on learning how to describe a finite state machine (FSM) in Verilog, and then combined it with a counter to build the basic control logic for a traffic light.
 
@@ -19,6 +21,10 @@ Counter
 ↓
 Using the counter as a state transition condition
 ```
+
+## RTL Design
+
+Design file: [fsm.v](../02_fsm/fsm.v)
 
 The first step was to assign binary codes to the three traffic-light states:
 
@@ -116,11 +122,11 @@ For example, the red light may need to stay on for several clock cycles before s
 
 This introduced the next important part of the design: the counter.
 
-For example, I can define the duration of each state like this:
+For example, durations could be expressed with parameters like this. These snippets illustrate the idea; the current RTL uses `count` and explicit terminal counts of 9, 19, and 2.
 
 ```verilog
 parameter RED_TIME    = 10;
-parameter GREEN_TIME  = 8;
+parameter GREEN_TIME  = 20;
 parameter YELLOW_TIME = 3;
 ```
 
@@ -176,6 +182,8 @@ Now the FSM no longer changes state every clock cycle.
 
 Instead, each state remains active until the counter reaches the required value.
 
+## Questions and Understanding
+
 During today’s study, I mainly asked and thought about the following questions:
 
 - Why should state values be defined using `parameter`?
@@ -199,13 +207,17 @@ instead of:
 counter == RED_TIME
 ```
 
+## Summary
+
 The biggest improvement today was that I started to understand how a state diagram can be translated into actual Verilog code.
 
 Previously, I understood FSMs mainly from the perspective of digital logic and state diagrams.
 
 Now I am beginning to see how the same structure is implemented in RTL.
 
-Tomorrow, I plan to continue with:
+## Next Steps
+
+The next step after this design session was:
 
 ```text
 Testbench
@@ -219,4 +231,4 @@ Waveform analysis
 Checking state transitions and counter behavior
 ```
 
-After that, I want to try implementing another FSM completely by myself, starting from only the state diagram.
+The testbench and simulation work is recorded in [Log 4](log4_fsm_tb.md). After that, I want to try implementing another FSM completely by myself, starting from only the state diagram.
