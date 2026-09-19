@@ -5,7 +5,7 @@ module uart_tx(
   input  wire [7:0] data,  
   input  wire start_tx,
   output reg tx
-)
+);
 
 //状态定义
 parameter IDLE      = 2'b00;
@@ -29,15 +29,14 @@ end
 
 //组合逻辑
 always@ (*) begin
-   next_state = IDLE;
-   tx = 1;
+   next_state = current_state;//默认状态不变
+   tx = 1'b1;
 
    case (current_state)
 
      IDLE: begin
            if (start_tx) begin
                next_state = START_BIT;
-               tx = 0;
            end
            else
                next_state = IDLE;
@@ -56,7 +55,7 @@ always@ (*) begin
            
      
      DATA: begin
-           tx =data[data_counter];
+           tx =data_reg[data_counter];
 
            if (baud_counter == 9'd433) begin
                if (data_counter == 3'd7) 
@@ -119,9 +118,13 @@ always@ (posedge clk) begin
 end            
 
 //将数据保存到寄存器
-always@ (*) begin
-          if (current_state == IDLE & start_tx == 1) begin
-              data_reg = data;
+always@(posedge clk) begin
+    if (!rst_n)
+        data_reg <= 8'b0;
+    else if ((current_state == IDLE) && (start_tx == 1'b1))
+        data_reg <= data;
 end
 
+
+       
 endmodule
