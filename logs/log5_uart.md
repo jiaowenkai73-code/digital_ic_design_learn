@@ -14,7 +14,7 @@ The UART line is high when idle. The start bit is low, and the stop bit is high.
 
 ## RTL Design
 
-Design file: [uart.v](../03_uart/uart.v). The module name is `uart_tx`.
+Design file: [uart_tx.v](../03_uart/uart_tx.v). The module name is `uart_tx`.
 
 The transmitter uses four FSM states:
 
@@ -86,14 +86,14 @@ Several details became clearer:
 
 ## Current Implementation Status
 
-The revised `uart.v` contains the completed first RTL implementation. The module declaration and block endings are corrected, and `next_state` defaults to `current_state`.
+The revised `uart_tx.v` contains the completed first RTL implementation. The module declaration and block endings are corrected, and `next_state` defaults to `current_state`.
 
 The input byte is captured into `data_reg` on a rising clock edge when `start_tx` is accepted in IDLE. This clocked block uses nonblocking assignments and resets `data_reg` to zero. The DATA state selects `data_reg[data_counter]`, and `tx` stays high in IDLE until the FSM enters START_BIT.
 
 The revised source passes the following Icarus Verilog compilation check from the repository root:
 
 ```sh
-iverilog -Wall -tnull -s uart_tx 03_uart/uart.v
+iverilog -Wall -tnull -s uart_tx 03_uart/uart_tx.v
 ```
 
 This is a compilation check only. UART frame timing and bit order still need testbench simulation and waveform verification.

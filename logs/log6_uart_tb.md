@@ -2,7 +2,7 @@
 
 ## What I Did
 
-Today I wrote [uart_tb.v](../03_uart/uart_tb.v) to simulate the UART transmitter.
+Today I wrote [uart_tx_tb.v](../03_uart/uart_tx_tb.v) to simulate the UART transmitter.
 
 - Generated a 50 MHz clock with a 20 ns period and applied an initial active-low reset.
 - Sent `8'b11110000`, then requested `8'b10100101` after the first frame had time to finish. Each `start_tx` pulse lasts one clock cycle.
